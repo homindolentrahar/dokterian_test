@@ -14,7 +14,7 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (ctx, state) {
         if (state.status == AuthStatus.authenticated) {
-          context.go(RoutePaths.main);
+          context.go(RoutePaths.home);
         } else {
           context.go(RoutePaths.login);
         }

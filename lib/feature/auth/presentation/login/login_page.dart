@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                 } else if (state.status == BaseStatus.success) {
                   listenerCtx.read<AuthCubit>().authenticate(state.data ?? "");
 
-                  context.go(RoutePaths.main);
+                  context.go(RoutePaths.home);
                 }
               }, builder: (builderCtx, state) {
                 return Column(
