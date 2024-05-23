@@ -1,15 +1,18 @@
+import 'package:dokterian_test/feature/main/domain/dto/doctor_nearby.dart';
 import 'package:dokterian_test/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NearbyDoctorItem extends StatelessWidget {
-  const NearbyDoctorItem({super.key});
+  final DoctorNearby? data;
+
+  const NearbyDoctorItem({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 16,
+        horizontal: 12,
         vertical: 20,
       ),
       decoration: BoxDecoration(
@@ -41,14 +44,16 @@ class NearbyDoctorItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Dr. Budi Santoso",
+                      data?.nama ?? "-",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      "Dokter Umum",
+                      data?.jenis ?? "-",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -67,7 +72,7 @@ class NearbyDoctorItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    "1.2 KM",
+                    data?.jarak ?? "-",
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
@@ -82,42 +87,46 @@ class NearbyDoctorItem extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 6,
+                child: Row(
                   children: [
                     SvgPicture.asset(
                       Assets.icons.icTime,
-                      width: 20,
-                      height: 20,
+                      width: 16,
+                      height: 16,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
-                    Text(
-                      "4,8 (120 Reviews)",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.tertiary),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        data?.tanggal ?? "-",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.tertiary),
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               Expanded(
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 6,
+                child: Row(
                   children: [
                     SvgPicture.asset(
                       Assets.icons.icTime,
-                      width: 20,
-                      height: 20,
+                      width: 16,
+                      height: 16,
                       color: Theme.of(context).colorScheme.secondary,
                     ),
-                    Text(
-                      "Open at 17.00",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        data?.jadwal ?? "-",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.secondary),
+                      ),
                     ),
                   ],
                 ),

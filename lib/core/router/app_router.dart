@@ -35,8 +35,8 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: RoutePaths.home,
-                pageBuilder: (ctx, state) => const NoTransitionPage(
-                  child: HomePage(),
+                pageBuilder: (ctx, state) => NoTransitionPage(
+                  child: HomePage.createPage(),
                 ),
               ),
             ],
@@ -57,8 +57,8 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: RoutePaths.chat,
-                pageBuilder: (ctx, state) => const NoTransitionPage(
-                  child: HomePage(),
+                pageBuilder: (ctx, state) => NoTransitionPage(
+                  child: HomePage.createPage(),
                 ),
               ),
             ],

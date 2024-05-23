@@ -37,8 +37,8 @@ class ApiClient {
     newHeaders.addAll(headers);
 
     final token = await injector.get<SecureStorageManager>().getToken() ?? "";
-    if (!newHeaders.containsKey("Authorization") && token.isNotEmpty) {
-      newHeaders['Authorization'] = "Bearer $token";
+    if (!newHeaders.containsKey("token") && token.isNotEmpty) {
+      newHeaders['token'] = token;
     }
 
     if (isMultipart) {

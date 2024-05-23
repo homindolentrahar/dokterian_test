@@ -1,14 +1,34 @@
+import 'package:dokterian_test/app_injection.dart';
+import 'package:dokterian_test/core/bloc/base_status.dart';
 import 'package:dokterian_test/core/ui/widget/app_search_field.dart';
+import 'package:dokterian_test/feature/main/domain/repository/home_repository.dart';
+import 'package:dokterian_test/feature/main/presentation/home/bloc/nearby_doctor_cubit.dart';
+import 'package:dokterian_test/feature/main/presentation/home/bloc/nearby_doctor_state.dart';
 import 'package:dokterian_test/feature/main/presentation/home/widget/grid_menu.dart';
 import 'package:dokterian_test/feature/main/presentation/home/widget/highlight_doctor_banner.dart';
 import 'package:dokterian_test/feature/main/presentation/home/widget/nearby_doctor_item.dart';
 import 'package:dokterian_test/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage._();
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+
+  static Widget createPage() => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => NearbyDoctorCubit(injector.get<HomeRepository>()),
+          ),
+        ],
+        child: const HomePage._(),
+      );
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,12 +89,25 @@ class HomePage extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 16),
-                ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 1,
-                  separatorBuilder: (ctx, index) => const SizedBox(height: 16),
-                  itemBuilder: (ctx, index) => const NearbyDoctorItem(),
+                BlocBuilder<NearbyDoctorCubit, NearbyDoctorState>(
+                  builder: (builderCtx, state) {
+                    if (state.status == BaseStatus.loading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state.status == BaseStatus.success) {
+                      return ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 1,
+                        separatorBuilder: (ctx, index) =>
+                            const SizedBox(height: 16),
+                        itemBuilder: (ctx, index) => NearbyDoctorItem(
+                          data: state.data,
+                        ),
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
                 ),
               ],
             ),
