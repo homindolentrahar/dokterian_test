@@ -45,3 +45,4 @@ app.*.map.json
 # Other stuffs
 **/*.g.dart
 **/*.freezed.dart
+**/*.gen.dart
