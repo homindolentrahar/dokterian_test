@@ -49,6 +49,29 @@ class ApiResponseList<T> {
       };
 }
 
+class ApiResponsePrimitive<T> {
+  final Metadata? metadata;
+  final T? response;
+
+  ApiResponsePrimitive({
+    this.metadata,
+    this.response,
+  });
+
+  factory ApiResponsePrimitive.fromJson(Map<String, dynamic> json) =>
+      ApiResponsePrimitive(
+        metadata: json["metadata"] == null
+            ? null
+            : Metadata.fromJson(json["metadata"]),
+        response: json["response"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "metadata": metadata?.toJson(),
+        "response": response,
+      };
+}
+
 class Metadata {
   final int? status;
   final String? message;

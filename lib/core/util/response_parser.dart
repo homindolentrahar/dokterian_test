@@ -9,12 +9,15 @@ class ResponseParser<T> extends JsonConverter<T, Object> {
   @override
   T fromJson(Object json) {
     if (json is List && json.isEmpty) json = <String, dynamic>{};
+
+    if (json is Map<String, dynamic> == false) {
+      return json as T;
+    }
+
     json = json as Map<String, dynamic>;
 
     if (typeEqualn<T, AuthResponseModel>()) {
       return AuthResponseModel.fromJson(json) as T;
-    } else if (typeEqualn<T, String>()) {
-      return json as T;
     } else if (typeEqualn<T, dynamic>()) {
       return dynamic as T;
     }

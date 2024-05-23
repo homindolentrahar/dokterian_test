@@ -1,7 +1,8 @@
+import 'package:dokterian_test/app_injection.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageManager {
-  final _instance = const FlutterSecureStorage();
+  final _instance = injector.get<FlutterSecureStorage>();
   final _tokenKey = "token";
 
   Future<void> saveToken(String token) async {
@@ -10,5 +11,9 @@ class SecureStorageManager {
 
   Future<String?> getToken() async {
     return _instance.read(key: _tokenKey);
+  }
+
+  Future<void> removeToken() async {
+    return _instance.delete(key: _tokenKey);
   }
 }

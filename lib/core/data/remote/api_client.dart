@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
+import 'package:dokterian_test/app_injection.dart';
 import 'package:dokterian_test/core/data/remote/api_response.dart';
 import 'package:dokterian_test/core/data/remote/app_dio.dart';
 import 'package:dokterian_test/core/util/secure_storage_manager.dart';
@@ -35,7 +36,7 @@ class ApiClient {
     dynamic data = body;
     newHeaders.addAll(headers);
 
-    final token = await SecureStorageManager().getToken() ?? "";
+    final token = await injector.get<SecureStorageManager>().getToken() ?? "";
     if (!newHeaders.containsKey("Authorization") && token.isNotEmpty) {
       newHeaders['Authorization'] = "Bearer $token";
     }
@@ -112,5 +113,26 @@ class ApiClient {
     );
 
     return ApiResponseList<T>.fromJson(result ?? {});
+  }
+
+  Future<ApiResponsePrimitive<T>> requestPrimitive<T>({
+    required String endpoint,
+    required ApiMethod method,
+    Map<String, dynamic> headers = const {},
+    Map<String, dynamic> body = const {},
+    Map<String, dynamic>? queryParams,
+    bool isMultipart = false,
+    d,
+  }) async {
+    final result = await requestData(
+      endpoint: endpoint,
+      method: method,
+      body: body,
+      headers: headers,
+      queryParams: queryParams,
+      isMultipart: isMultipart,
+    );
+
+    return ApiResponsePrimitive<T>.fromJson(result ?? {});
   }
 }

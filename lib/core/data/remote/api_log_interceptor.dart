@@ -20,22 +20,29 @@ class ApiLogInterceptor extends InterceptorsWrapper {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (response.data is Map<String, dynamic>) {
+      if (response.data['response']['dataResponse'] != null) {
+        response.data['response']['data'] =
+            response.data['response']['dataResponse'];
+        response.data['response']['dataResponse'] = null;
+      }
+
+      if (response.data['response']['name'] != null) {
+        response.data['response']['data'] = response.data['response']['name'];
+        response.data['response']['name'] = null;
+      }
+
+      if (response.data['response']['token'] != null) {
+        response.data['response']['data'] = response.data['response']['token'];
+        response.data['response']['token'] = null;
+      }
+    }
+
     debugPrint("### RESPONSE ###");
     debugPrint("${response.statusCode} -> ${response.requestOptions.uri}");
     debugPrint("Headers: ${response.headers}");
     debugPrint("Response: ${response.data}");
     debugPrint("### END RESPONSE ###");
-
-    if (response.data is Map<String, dynamic>) {
-      if (response.data['response']['dataResponse'] != null) {
-        response.data['response']['data'] =
-            response.data['response']['dataResponse'];
-      }
-
-      if (response.data['response']['name'] != null) {
-        response.data['response']['data'] = response.data['response']['name'];
-      }
-    }
 
     return super.onResponse(response, handler);
   }
