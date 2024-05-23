@@ -46,8 +46,8 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: RoutePaths.schedule,
-                pageBuilder: (ctx, state) => const NoTransitionPage(
-                  child: JadwalPage(),
+                pageBuilder: (ctx, state) => NoTransitionPage(
+                  child: JadwalPage.createPage(),
                 ),
               ),
             ],
@@ -68,8 +68,8 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: RoutePaths.profile,
-                pageBuilder: (ctx, state) => const NoTransitionPage(
-                  child: JadwalPage(),
+                pageBuilder: (ctx, state) => NoTransitionPage(
+                  child: JadwalPage.createPage(),
                 ),
               ),
             ],

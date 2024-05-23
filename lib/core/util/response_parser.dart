@@ -1,5 +1,6 @@
 import 'package:dokterian_test/feature/auth/data/model/auth_response_model.dart';
 import 'package:dokterian_test/feature/main/data/model/doctor_nearby_model.dart';
+import 'package:dokterian_test/feature/main/data/model/doctor_schedule_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 bool typeEqual<L, R>() => L == R;
@@ -21,6 +22,8 @@ class ResponseParser<T> extends JsonConverter<T, Object> {
       return AuthResponseModel.fromJson(json) as T;
     } else if (typeEqualn<T, DoctorNearbyModel>()) {
       return DoctorNearbyModel.fromJson(json) as T;
+    } else if (typeEqualn<T, DoctorScheduleModel>()) {
+      return DoctorScheduleModel.fromJson(json) as T;
     } else if (typeEqualn<T, dynamic>()) {
       return dynamic as T;
     }
@@ -34,6 +37,8 @@ class ResponseParser<T> extends JsonConverter<T, Object> {
       return (object as AuthResponseModel).toJson();
     } else if (typeEqualn<T, DoctorNearbyModel>()) {
       return (object as DoctorNearbyModel).toJson();
+    } else if (typeEqualn<T, DoctorScheduleModel>()) {
+      return (object as DoctorScheduleModel).toJson();
     } else if (typeEqualn<T, dynamic>()) {
       return (object as dynamic);
     }
